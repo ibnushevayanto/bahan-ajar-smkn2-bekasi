@@ -20,4 +20,22 @@ export default {
       return { status: false };
     }
   },
+  async simpanData(_, params) {
+    try {
+      const response = await fetch(`${FIREBASE_DOMAIN}`, {
+        method: "POST",
+        body: JSON.stringify(params),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Could not add quotes.");
+      }
+
+      return { status: true };
+    } catch (error) {
+      return { status: false };
+    }
+  },
 };
